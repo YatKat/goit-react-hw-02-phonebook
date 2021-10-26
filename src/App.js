@@ -1,45 +1,29 @@
 import React, {Component} from 'react';
 import './App.css';
 import shortid from 'shortid';
+import ContactForm from './components/ContactForm/ContactForm';
+import Filter from './components/Filter/Filter';
+import ContactList from './components/ContactList/ContactList';
+
+
 class App extends Component {
 
   state = {
-    name : "",
-    number : "",
-    filter : "",
+    filter : '',
     contacts : [
     {id: 'id-1', name: 'My test Name', number: '111-22-33'},
     ]
   };
 
-  addContact = event =>{
-    event.preventDefault();
+  addContact = data => {
     const uid = shortid.generate();
     const contact = {
       id : uid,
-      name : this.state.name,
-      number : this.state.number
+      name : data.name,
+      number : data.number
     }
-    console.log(contact.id, contact.name, contact.number);
     this.setState({
       contacts : this.state.contacts.concat([contact])
-    });
-    this.reset();
-  }
-
-  reset = () => {
-    this.setState({
-      name : "",
-      number : ""
-    });
-  };
-
-  handleInput = ev =>{
-    ev.preventDefault();
-    const inputName = ev.currentTarget.name;
-    const inputValue = ev.currentTarget.value;
-    this.setState ({
-        [inputName] : inputValue
     });
   }
 
@@ -47,13 +31,15 @@ class App extends Component {
     ev.preventDefault();
     const inputName = ev.currentTarget.name;
     const inputValue = ev.currentTarget.value;
-    this.setState ({
-        [inputName] : inputValue,
+    console.log(inputValue);
+    this.setState({
+      [inputName] : inputValue
     });
   }
 
     getFilteredContact = () => {
       const {filter, contacts} = this.state;
+      console.log(this.state)
       if(filter){
         return contacts.filter
           (contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
@@ -67,43 +53,11 @@ const contacts = this.getFilteredContact();
 
     return (
       <div>
-        <h2>Phonebook</h2>
-        <form onSubmit={this.addContact}>
-          <label>
-            Name
-            <input 
-            type ="text"
-            name = "name"
-            placeholder= "Enter contact name here"
-            value = {this.state.name}
-            onChange ={this.handleInput}/>
-          </label>
-          <label>
-            Number
-            <input 
-            type ="text"
-            name = "number"
-            placeholder= "Format: 111-11-11"
-            value = {this.state.number}
-            onChange ={this.handleInput}/>
-          </label>
-          <button type="submit">Add contact</button>
-        </form>
-      <p>You can find a contact by name:</p>
-        <label>
-          <input 
-          type="text" 
-          name="filter"
-          value={this.state.filter}
-          onChange={this.handleFilterInput}/>
-        </label>
-        
-        <p>Contact list : </p>
-        <ul>
-          {contacts.map(contact =>{
-           return( <li key={contact.id}>{contact.name} {contact.number}</li>);
-          })}  
-        </ul>
+        <h1>Phonebook</h1>
+        <ContactForm userInput = {this.addContact}/>
+        <h2>Contacts : </h2>
+        <Filter filter = {this.state.filter} handleFilterInput={this.handleFilterInput}/>
+        <ContactList contacts = {contacts}/>
       </div>
     );
   }

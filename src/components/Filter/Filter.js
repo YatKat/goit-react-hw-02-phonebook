@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import styles from './Filter.module.css';
 
 class Filter extends React.Component{
 
@@ -10,7 +11,7 @@ handleFilterInput : PropTypes.func
 
     render(){
         return(
-            <div>
+            <div className = {styles.filter}>
                 <p>You can find a contact by name:</p>
                     <label>
                         <input 

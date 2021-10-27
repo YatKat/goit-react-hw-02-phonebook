@@ -38,23 +38,27 @@ class ContactForm extends React.Component{
         return(
             <div className = {styles.container}>
                 <form className ={styles.form} onSubmit={this.handleNewContact}>
-                    <label htmlFor={nameUid}>Name</label>
-                        <input
+                    <p className = {styles.paragr}>
+                        <label className = {styles.label}
+                     htmlFor={nameUid}>Name</label>
+                        <br/><input
                         id = {nameUid}
                         type ="text"
                         name = "name"
                         placeholder= "Enter contact name here"
                         value = {this.state.name}
                         onChange ={this.handleInput}/>
+                        </p>
           
-                    <label htmlFor={numberUid}>Number</label>
-                        <input
+                    <p><label htmlFor={numberUid}>Number</label>
+                        <br/><input
                         id = {numberUid} 
                         type ="text"
                         name = "number"
                         placeholder= "Format: +38011-111-11-11"
                         value = {this.state.number}
-                        onChange ={this.handleInput}/>
+                        onChange ={this.handleInput}/> 
+                        </p>
           
                     <button type="submit">Add contact</button>
                 </form>

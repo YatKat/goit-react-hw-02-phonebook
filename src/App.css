@@ -1,6 +1,21 @@
-.App {
-  text-align: center;
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-h1 h2{
+h1, h2 {
 text-align: center;
+}
+
+button{
+  background: rgb(180, 36, 31);
+}
+body{
+  height: 100vh;
+  background: linear-gradient(to bottom, rgb(163, 129, 65), rgb(66, 35, 6)) no-repeat;
+  background-size: cover;
+  color: rgb(56, 14, 14);
+}
+div{
+  text-align: center;
 }

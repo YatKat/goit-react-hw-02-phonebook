@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import  styles from './App.css';
 import shortid from 'shortid';
 import ContactForm from './components/ContactForm/ContactForm';
 import Filter from './components/Filter/Filter';
@@ -22,9 +22,14 @@ class App extends Component {
       name : data.name,
       number : data.number
     }
-    this.setState({
-      contacts : this.state.contacts.concat([contact])
-    });
+
+    if(this.state.contacts.find(contact => contact.name === data.name)){
+        alert(`${data.name} already exists in your phonebook`);
+    }else{
+      this.setState({
+        contacts : this.state.contacts.concat([contact])
+      });
+    }
   }
 
   handleFilterInput = ev =>{
@@ -35,6 +40,13 @@ class App extends Component {
     this.setState({
       [inputName] : inputValue
     });
+  }
+
+  handleDelete = event => {
+    const contactToDelete = event.currentTarget.value;
+    console.log(contactToDelete);
+    this.setState(prevState => 
+      ({contacts: prevState.contacts.filter(contact => contact.name !== contactToDelete)}));
   }
 
     getFilteredContact = () => {
@@ -57,7 +69,7 @@ const contacts = this.getFilteredContact();
         <ContactForm userInput = {this.addContact}/>
         <h2>Contacts : </h2>
         <Filter filter = {this.state.filter} handleFilterInput={this.handleFilterInput}/>
-        <ContactList contacts = {contacts}/>
+        <ContactList contacts = {contacts} handleDelete = {this.handleDelete}/>
       </div>
     );
   }

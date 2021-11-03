@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import  styles from './App.css';
+import './App.css';
 import shortid from 'shortid';
 import ContactForm from './components/ContactForm/ContactForm';
 import Filter from './components/Filter/Filter';
@@ -11,9 +11,24 @@ class App extends Component {
   state = {
     filter : '',
     contacts : [
-    {id: 'id-1', name: 'My test Name', number: '111-22-33'},
     ]
   };
+
+  componentDidMount(){
+    const contactsItem = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contactsItem);
+    if(parsedContacts){
+      this.setState({contacts : parsedContacts});
+    }
+    
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.state.contacts !== prevState.contacts){
+      console.log('Updates contact list')
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   addContact = data => {
     const uid = shortid.generate();
